@@ -1,0 +1,443 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0f0f18;
+  --card:rgba(255,255,255,.05);
+  --text:#ffffff;
+  --text-soft:rgba(218,210,240,.77);
+  --gold:#C8993A;
+  --border:rgba(255,255,255,.1);
+}
+
+body.light-mode{
+  --bg:#f5f7fb;
+  --card:rgba(255,255,255,.92);
+  --text:#111827;
+  --text-soft:#374151;
+  --gold:#b7791f;
+  --border:rgba(0,0,0,.08);
+}
+
+body{
+  background:var(--bg);
+  transition:all .35s ease;
+}
+
+.hdr,
+.body,
+.gc,
+.ei,
+.ref,
+.stat,
+.sk,
+.ci{
+  background:var(--card)!important;
+  border-color:var(--border)!important;
+}
+
+.name,
+.jt,
+.edeg,
+.cn,
+.rn{
+  color:var(--text)!important;
+}
+
+.summary,
+.jb li,
+.einst,
+.rr,
+.rc,
+.stat-l,
+.pb-label,
+.sk,
+.ci{
+  color:var(--text-soft)!important;
+}
+
+.theme-btn{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:9999;
+  border:none;
+  padding:10px 16px;
+  border-radius:30px;
+  background:#C8993A;
+  color:#fff;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+
+
+@keyframes orbDrift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(28px,-22px) scale(1.06)}}
+@keyframes orbDrift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,26px)}}
+@keyframes orbDrift3{0%,100%{transform:translate(0,0)}50%{transform:translate(14px,18px)}}
+@keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes glowBreath{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.85;transform:scale(1.12)}}
+@keyframes scanBeam{0%{top:-2px;opacity:0}8%{opacity:1}88%{opacity:1}100%{top:100%;opacity:0}}
+@keyframes shimmerSlide{0%{transform:translateX(-120%) skewX(-14deg)}100%{transform:translateX(220%) skewX(-14deg)}}
+@keyframes badgePing{0%,100%{box-shadow:0 0 0 0 rgba(200,153,58,.55)}65%{box-shadow:0 0 0 8px rgba(200,153,58,0)}}
+@keyframes dotGlow{0%,100%{box-shadow:0 0 4px rgba(200,153,58,.5)}50%{box-shadow:0 0 14px rgba(200,153,58,1),0 0 4px rgba(200,153,58,.8)}}
+@keyframes lineGrow{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
+@keyframes statPop{0%{opacity:0;transform:scale(.65) translateY(14px)}75%{transform:scale(1.06)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes heroIn{0%{opacity:0;transform:translateY(36px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes nameReveal{0%{opacity:0;letter-spacing:-.4em;filter:blur(6px)}100%{opacity:1;letter-spacing:.5px;filter:blur(0)}}
+@keyframes pillDrop{0%{opacity:0;transform:translateY(-14px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes ciFade{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes timelineDot{0%{transform:scale(0) rotate(-90deg);opacity:0}70%{transform:scale(1.3) rotate(5deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes jpSlide{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes progressFill{from{width:0}to{width:var(--w)}}
+
+.reveal{opacity:0;transform:translateY(38px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.88) translateY(20px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.34,1.28,.64,1)}
+.reveal-scale.visible{opacity:1;transform:scale(1) translateY(0)}
+
+.wrap{width:100%;max-width:680px;margin:0 auto;position:relative;padding-bottom:3rem}
+
+.scene{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;border-radius:22px}
+.orb{position:absolute;border-radius:50%;filter:blur(72px)}
+.o1{width:360px;height:360px;background:radial-gradient(circle,rgba(145,140,165,.26),transparent 70%);top:-110px;left:-80px;animation:orbDrift1 13s ease-in-out infinite}
+.o2{width:280px;height:280px;background:radial-gradient(circle,rgba(200,153,58,.14),transparent 70%);top:90px;right:-55px;animation:orbDrift2 16s ease-in-out infinite}
+.o3{width:220px;height:220px;background:radial-gradient(circle,rgba(165,160,185,.16),transparent 70%);bottom:260px;left:38%;animation:orbDrift3 11s ease-in-out infinite}
+.o4{width:170px;height:170px;background:radial-gradient(circle,rgba(200,153,58,.09),transparent 70%);bottom:90px;right:18%;animation:orbDrift1 19s ease-in-out infinite reverse}
+
+.hdr{position:relative;z-index:2;background:rgba(255,255,255,.055);backdrop-filter:blur(34px) saturate(180%);-webkit-backdrop-filter:blur(34px) saturate(180%);border:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(200,153,58,.22);border-radius:22px 22px 0 0;padding:2.2rem 2.2rem 1.8rem;overflow:hidden;animation:heroIn 1s cubic-bezier(.22,1,.36,1) both}
+.scan-beam{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,153,58,.0) 8%,rgba(200,153,58,.65) 38%,rgba(255,255,255,.28) 50%,rgba(200,153,58,.65) 62%,rgba(200,153,58,.0) 92%,transparent);animation:scanBeam 4.5s cubic-bezier(.4,0,.6,1) infinite 1s;pointer-events:none;z-index:10}
+.hdr-gloss{position:absolute;top:0;left:0;right:0;height:48%;background:linear-gradient(180deg,rgba(255,255,255,.045),transparent);pointer-events:none}
+.hdr-shine{position:absolute;inset:0;background:linear-gradient(110deg,transparent 32%,rgba(255,255,255,.052) 50%,transparent 68%);animation:shimmerSlide 9s ease-in-out infinite 2.5s;pointer-events:none}
+
+.av-wrap{position:relative;flex-shrink:0;animation:heroIn .8s .12s cubic-bezier(.22,1,.36,1) both}
+.av-glow{position:absolute;inset:-9px;border-radius:50%;background:rgba(200,153,58,.1);filter:blur(12px);animation:glowBreath 3.5s ease-in-out infinite}
+.av{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.07);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;color:#F5D99A;position:relative;overflow:hidden}
+.av-ring{position:absolute;inset:-2px;border-radius:50%;border:1.5px solid transparent;background:conic-gradient(rgba(200,153,58,.75) 0deg,rgba(200,153,58,.08) 130deg,rgba(180,178,198,.38) 210deg,rgba(200,153,58,.75) 360deg) border-box;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);-webkit-mask-composite:destination-out;mask-composite:exclude;animation:spinRing 7s linear infinite}
+
+.hdr-top{display:flex;align-items:center;gap:18px;margin-bottom:16px}
+.name-block{animation:heroIn .9s .22s cubic-bezier(.22,1,.36,1) both}
+.name{font-size:30px;font-weight:500;color:#fff;display:block;animation:nameReveal .95s .48s cubic-bezier(.22,1,.36,1) both;letter-spacing:.5px}
+.title-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(200,153,58,.12);color:#F5D99A;font-size:11px;padding:4px 12px;border-radius:20px;border:1px solid rgba(200,153,58,.38);margin-top:6px;animation:pillDrop .65s .82s cubic-bezier(.34,1.56,.64,1) both;letter-spacing:.4px}
+.title-pill i{font-size:12px}
+
+.contact-row{display:flex;flex-wrap:wrap;gap:7px}
+.ci{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:rgba(225,218,242,.72);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:3px 11px;transition:background .3s,border-color .3s,color .28s,transform .28s cubic-bezier(.22,1,.36,1)}
+.ci:nth-child(1){animation:ciFade .5s .95s both}.ci:nth-child(2){animation:ciFade .5s 1.05s both}.ci:nth-child(3){animation:ciFade .5s 1.15s both}.ci:nth-child(4){animation:ciFade .5s 1.25s both}
+.ci:hover{background:rgba(200,153,58,.13);border-color:rgba(200,153,58,.42);color:#F5D99A;transform:translateY(-2px)}
+.ci i{font-size:13px;color:#C8993A}
+
+.body{position:relative;z-index:1;background:rgba(255,255,255,.038);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);border:1px solid rgba(255,255,255,.09);border-top:none;border-radius:0 0 22px 22px;padding:1.8rem 2.2rem}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2rem}
+.stat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:.9rem .5rem;text-align:center;position:relative;overflow:hidden;transition:transform .38s cubic-bezier(.22,1,.36,1),border-color .3s,background .3s}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,153,58,.32),transparent)}
+.stat:hover{transform:translateY(-4px) scale(1.04);border-color:rgba(200,153,58,.32);background:rgba(255,255,255,.08)}
+.stat-n{font-size:26px;font-weight:500;color:#F5D99A}
+.stat-l{font-size:10px;color:rgba(198,186,228,.52);margin-top:3px;letter-spacing:.3px}
+
+.section{margin-bottom:2rem}
+
+.st{display:flex;align-items:center;gap:9px;font-size:10.5px;font-weight:500;color:#C8993A;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+.st i{font-size:14px}
+.stl{flex:1;height:1px;background:linear-gradient(90deg,rgba(200,153,58,.55),transparent);transform-origin:left}
+
+.gc{background:rgba(255,255,255,.048);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:1.1rem 1.2rem;position:relative;overflow:hidden;transition:transform .45s cubic-bezier(.22,1,.36,1),border-color .35s,background .35s}
+.gc:hover{transform:translateY(-3px) scale(1.004);border-color:rgba(200,153,58,.28);background:rgba(255,255,255,.072)}
+.gc-top{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),rgba(200,153,58,.18),rgba(255,255,255,.15),transparent)}
+.gc-shine{position:absolute;inset:0;background:linear-gradient(112deg,transparent 30%,rgba(255,255,255,.038) 50%,transparent 70%);animation:shimmerSlide 11s ease-in-out infinite 4s;pointer-events:none}
+
+.summary{font-size:13px;line-height:1.84;color:rgba(218,210,240,.77)}
+
+.timeline{position:relative;padding-left:22px}
+.timeline::before{content:'';position:absolute;left:5px;top:10px;bottom:10px;width:1px;background:linear-gradient(180deg,rgba(200,153,58,.55),rgba(200,153,58,.12) 85%,transparent)}
+
+.job{margin-bottom:1.15rem;padding-bottom:1.15rem;border-bottom:1px solid rgba(255,255,255,.062);position:relative}
+.job:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.job-dot{position:absolute;left:-18px;top:5px;width:9px;height:9px;border-radius:50%;background:#C8993A;border:1.5px solid rgba(22,18,42,.9);box-shadow:0 0 9px rgba(200,153,58,.7);animation:timelineDot .55s cubic-bezier(.34,1.56,.64,1) both}
+.jh{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:5px}
+.jt{font-size:13.5px;font-weight:500;color:#fff}
+.jp{font-size:10px;color:rgba(200,153,58,.8);background:rgba(200,153,58,.08);padding:2px 9px;border-radius:10px;border:1px solid rgba(200,153,58,.2);white-space:nowrap}
+.badge-live{display:inline-block;background:rgba(200,153,58,.18);color:#F5D99A;font-size:9px;padding:1px 7px;border-radius:10px;border:1px solid rgba(200,153,58,.45);margin-left:6px;vertical-align:middle;animation:badgePing 2.2s ease-in-out infinite}
+.jc{font-size:11.5px;color:rgba(192,180,228,.58);margin:3px 0 7px;font-style:italic}
+.jb{list-style:none}
+.jb li{font-size:12px;color:rgba(206,200,232,.68);line-height:1.72;padding:2px 0 2px 13px;position:relative}
+.jb li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:1px;background:rgba(200,153,58,.65);border-radius:2px}
+
+.egrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ei{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:.72rem .9rem;transition:transform .38s cubic-bezier(.22,1,.36,1),border-color .3s,background .3s;position:relative;overflow:hidden}
+.ei::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,153,58,.22),transparent)}
+.ei:hover{transform:translateY(-3px) scale(1.025);border-color:rgba(200,153,58,.3);background:rgba(255,255,255,.082)}
+.eyr{font-size:9.5px;color:#C8993A;font-weight:500;letter-spacing:.6px}
+.edeg{font-size:12px;font-weight:500;color:#fff;line-height:1.35;margin-top:2px}
+.einst{font-size:11px;color:rgba(196,184,228,.57);margin-top:2px}
+.egpa{font-size:10px;color:rgba(200,153,58,.56);margin-top:4px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem}
+
+.skills-wrap{display:flex;flex-wrap:wrap;gap:5px}
+.sk{background:rgba(255,255,255,.056);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:4px 11px;font-size:11px;color:rgba(218,210,240,.72);cursor:default;transition:all .34s cubic-bezier(.22,1,.36,1)}
+.sk:hover{background:rgba(200,153,58,.15);border-color:rgba(200,153,58,.5);color:#F5D99A;transform:translateY(-3px) scale(1.08)}
+
+.certs{display:flex;flex-direction:column;gap:9px}
+.cert{display:flex;align-items:flex-start;gap:10px}
+.cdot{width:6px;height:6px;background:#C8993A;border-radius:50%;flex-shrink:0;margin-top:5px;animation:dotGlow 2.8s ease-in-out infinite}
+.cn{font-size:12px;font-weight:500;color:#fff}
+.co{font-size:11px;color:rgba(186,174,222,.56)}
+
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ref{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:.9rem;transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .3s,background .3s;position:relative;overflow:hidden}
+.ref::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,153,58,.28),transparent)}
+.ref:hover{transform:translateY(-3px) scale(1.02);border-color:rgba(200,153,58,.32);background:rgba(255,255,255,.082)}
+.rn{font-size:13px;font-weight:500;color:#F5D99A}
+.rr{font-size:11px;color:rgba(198,188,232,.68)}
+.ro{font-size:11px;color:rgba(176,166,215,.5);font-style:italic}
+.rc{font-size:11px;color:rgba(176,166,215,.57);margin-top:4px}
+.rc i{color:#C8993A;font-size:12px;vertical-align:-1px}
+
+.footer-line{text-align:center;padding-top:1.3rem;font-size:11px;color:rgba(200,153,58,.4);font-style:italic;border-top:1px solid rgba(255,255,255,.07)}
+
+.progress-bar-wrap{margin-top:1.2rem}
+.pb-row{margin-bottom:.75rem}
+.pb-label{display:flex;justify-content:space-between;font-size:11px;color:rgba(210,200,238,.65);margin-bottom:5px}
+.pb-label span:last-child{color:rgba(200,153,58,.75)}
+.pb-track{height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.pb-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,rgba(200,153,58,.5),rgba(200,153,58,1));width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.pb-fill.animate{width:var(--w)}
+
+@media(max-width:480px){.egrid,.rg,.two,.stats{grid-template-columns:1fr}.jh{flex-direction:column}}
+</style>
+
+
+<button id="themeToggle" class="theme-btn">
+  🌙 Dark Mode
+</button>
+
+<div class="wrap">
+  <div class="scene">
+    <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div>
+  </div>
+
+  <div class="hdr">
+    <div class="scan-beam"></div><div class="hdr-gloss"></div><div class="hdr-shine"></div>
+    <div class="hdr-top">
+      <div class="av-wrap">
+        <div class="av-glow"></div>
+        <div class="av"><div class="av-ring"></div>SB</div>
+      </div>
+      <div class="name-block">
+        <span class="name">Saikat Bairagi</span>
+        <div class="title-pill"><i class="ti ti-building-bank" aria-hidden="true"></i> Customer Service Officer · Banking & Finance</div>
+      </div>
+    </div>
+    <div class="contact-row">
+      <span class="ci"><i class="ti ti-phone" aria-hidden="true"></i> 01714846906</span>
+      <span class="ci"><i class="ti ti-mail" aria-hidden="true"></i> saikatbabd@gmail.com</span>
+      <span class="ci"><i class="ti ti-map-pin" aria-hidden="true"></i> Khulna, Bangladesh</span>
+      <span class="ci"><i class="ti ti-calendar" aria-hidden="true"></i> Born 03 May 1998</span>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <div class="stats">
+      <div class="stat reveal-scale" data-delay="0"><div class="stat-n">6+</div><div class="stat-l">Years Experience</div></div>
+      <div class="stat reveal-scale" data-delay="120"><div class="stat-n">4</div><div class="stat-l">Roles Held</div></div>
+      <div class="stat reveal-scale" data-delay="240"><div class="stat-n">5</div><div class="stat-l">Certifications</div></div>
+    </div>
+
+    <div class="section">
+      <div class="st reveal" data-delay="0"><i class="ti ti-user" aria-hidden="true"></i> Professional Summary <div class="stl"></div></div>
+      <div class="gc reveal" data-delay="80">
+        <div class="gc-top"></div><div class="gc-shine"></div>
+        <p class="summary">Results-driven banking professional with 6+ years spanning frontline banking, international digital marketing, and remote financial sales. Combines strong customer relationship management with data-driven expertise — currently delivering service excellence at City Bank PLC while growing as a dynamic finance professional.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="st reveal" data-delay="0"><i class="ti ti-briefcase" aria-hidden="true"></i> Work Experience <div class="stl"></div></div>
+      <div class="gc reveal" data-delay="80">
+        <div class="gc-top"></div><div class="gc-shine"></div>
+        <div class="timeline">
+          <div class="job reveal" data-delay="0">
+            <div class="job-dot"></div>
+            <div class="jh"><span class="jt">Customer Service Officer <span class="badge-live">Live</span></span><span class="jp">Apr 2025 – Present</span></div>
+            <div class="jc">City Bank PLC</div>
+            <ul class="jb">
+              <li>Deliver frontline banking services — managing inquiries, transactions, and complaint resolution for a diverse client base.</li>
+              <li>Cross-sell banking products and onboard new clients, supporting branch performance targets.</li>
+              <li>Completed City Foundation Program for professional banking development.</li>
+            </ul>
+          </div>
+          <div class="job reveal" data-delay="100">
+            <div class="job-dot" style="animation-delay:.1s"></div>
+            <div class="jh"><span class="jt">Digital Marketing Manager</span><span class="jp">Sep 2017 – May 2024</span></div>
+            <div class="jc">Fiverr · Freelancer (International)</div>
+            <ul class="jb">
+              <li>Managed end-to-end campaigns for international clients across e-commerce, SaaS, and retail sectors.</li>
+              <li>Maintained top-rated status through consistent delivery and measurable global results.</li>
+            </ul>
+          </div>
+          <div class="job reveal" data-delay="200">
+            <div class="job-dot" style="animation-delay:.2s"></div>
+            <div class="jh"><span class="jt">Google Ads Manager</span><span class="jp">Feb 2019 – May 2024</span></div>
+            <div class="jc">Private Client · United States (Remote)</div>
+            <ul class="jb">
+              <li>Designed and optimised Google Ads campaigns, improving ROI, quality scores, and cost-per-acquisition.</li>
+              <li>Delivered monthly insights via Google Analytics and Data Studio.</li>
+            </ul>
+          </div>
+          <div class="job reveal" data-delay="300">
+            <div class="job-dot" style="animation-delay:.3s"></div>
+            <div class="jh"><span class="jt">Remote Sales Associate</span><span class="jp">Jun 2021 – Nov 2023</span></div>
+            <div class="jc">Experior Financial Group · Canada</div>
+            <ul class="jb">
+              <li>Consultative selling of financial products and insurance to the Canadian market.</li>
+              <li>Consistently met and exceeded monthly targets in a high-performance remote environment.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="st reveal" data-delay="0"><i class="ti ti-school" aria-hidden="true"></i> Education <div class="stl"></div></div>
+      <div class="egrid">
+        <div class="ei reveal-scale" data-delay="0"><div class="eyr">2021</div><div class="edeg">Master of Arts — English</div><div class="einst">Govt. Brajalal College, Khulna</div><div class="egpa">CGPA 2.56 · National University</div></div>
+        <div class="ei reveal-scale" data-delay="100"><div class="eyr">2020</div><div class="edeg">Bachelor of Arts — English</div><div class="einst">Daulatpur College, Khulna</div><div class="egpa">CGPA 2.69 · National University</div></div>
+        <div class="ei reveal-scale" data-delay="200"><div class="eyr">2016</div><div class="edeg">HSC — Business Studies</div><div class="einst">Govt. Sundarban Adarsha College</div><div class="egpa">GPA 3.83 · Jessore Board</div></div>
+        <div class="ei reveal-scale" data-delay="300"><div class="eyr">2014</div><div class="edeg">SSC — Business Studies</div><div class="einst">Batiaghata High School, Khulna</div><div class="egpa">GPA 4.50 · Jessore Board</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="st reveal" data-delay="0"><i class="ti ti-chart-bar" aria-hidden="true"></i> Skill Proficiency <div class="stl"></div></div>
+      <div class="gc reveal" data-delay="80">
+        <div class="gc-top"></div>
+        <div class="progress-bar-wrap">
+          <div class="pb-row reveal" data-delay="0"><div class="pb-label"><span>Customer Relationship Management</span><span>95%</span></div><div class="pb-track"><div class="pb-fill" style="--w:95%"></div></div></div>
+          <div class="pb-row reveal" data-delay="80"><div class="pb-label"><span>Banking Operations</span><span>90%</span></div><div class="pb-track"><div class="pb-fill" style="--w:90%"></div></div></div>
+          <div class="pb-row reveal" data-delay="160"><div class="pb-label"><span>Google Ads & PPC</span><span>88%</span></div><div class="pb-track"><div class="pb-fill" style="--w:88%"></div></div></div>
+          <div class="pb-row reveal" data-delay="240"><div class="pb-label"><span>Digital Marketing</span><span>85%</span></div><div class="pb-track"><div class="pb-fill" style="--w:85%"></div></div></div>
+          <div class="pb-row reveal" data-delay="320"><div class="pb-label"><span>MS Office Suite</span><span>92%</span></div><div class="pb-track"><div class="pb-fill" style="--w:92%"></div></div></div>
+          <div class="pb-row reveal" data-delay="400"><div class="pb-label"><span>Adobe Photoshop & Illustrator</span><span>78%</span></div><div class="pb-track"><div class="pb-fill" style="--w:78%"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="section">
+        <div class="st reveal" data-delay="0"><i class="ti ti-tools" aria-hidden="true"></i> Skills <div class="stl"></div></div>
+        <div class="skills-wrap">
+          <span class="sk reveal" data-delay="0">Customer Relations</span>
+          <span class="sk reveal" data-delay="60">Banking Operations</span>
+          <span class="sk reveal" data-delay="120">Google Ads & PPC</span>
+          <span class="sk reveal" data-delay="180">Digital Marketing</span>
+          <span class="sk reveal" data-delay="240">Google Analytics</span>
+          <span class="sk reveal" data-delay="300">MS Office Suite</span>
+          <span class="sk reveal" data-delay="360">Adobe Photoshop</span>
+          <span class="sk reveal" data-delay="420">Adobe Illustrator</span>
+          <span class="sk reveal" data-delay="480">English 60 WPM</span>
+          <span class="sk reveal" data-delay="540">Bangla 30 WPM</span>
+          <span class="sk reveal" data-delay="600">MacOS & Windows</span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="st reveal" data-delay="0"><i class="ti ti-certificate" aria-hidden="true"></i> Certifications <div class="stl"></div></div>
+        <div class="certs">
+          <div class="cert reveal" data-delay="0"><div class="cdot"></div><div><div class="cn">City Foundation Program</div><div class="co">City Bank PLC · 2025</div></div></div>
+          <div class="cert reveal" data-delay="80"><div class="cdot"></div><div><div class="cn">Bancassurance</div><div class="co">Bangladesh Insurance Academy · 2025</div></div></div>
+          <div class="cert reveal" data-delay="160"><div class="cdot"></div><div><div class="cn">Google Analytics Beginners</div><div class="co">Google · 2018</div></div></div>
+          <div class="cert reveal" data-delay="240"><div class="cdot"></div><div><div class="cn">Digital Marketing</div><div class="co">Creative IT Institute</div></div></div>
+          <div class="cert reveal" data-delay="320"><div class="cdot"></div><div><div class="cn">National Skill Standard Basic</div><div class="co">Asia Technical Training Center · 2014</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="st reveal" data-delay="0"><i class="ti ti-users" aria-hidden="true"></i> References <div class="stl"></div></div>
+      <div class="rg">
+        <div class="ref reveal-left" data-delay="0"><div class="rn">Rahul Roy</div><div class="rr">Assistant Director (Cash)</div><div class="ro">Bangladesh Bank, Khulna</div><div class="rc"><i class="ti ti-phone" aria-hidden="true"></i> 01916526072</div><div class="rc"><i class="ti ti-mail" aria-hidden="true"></i> rahul.roy@bb.org.bd</div></div>
+        <div class="ref reveal-right" data-delay="0"><div class="rn">Anjon Das</div><div class="rr">Customer Service Officer</div><div class="ro">City Bank PLC</div><div class="rc"><i class="ti ti-phone" aria-hidden="true"></i> 01648505100</div><div class="rc"><i class="ti ti-mail" aria-hidden="true"></i> anjon.das@citybankplc.com</div></div>
+      </div>
+    </div>
+
+    <div class="footer-line reveal" data-delay="0">I declare that all information provided is accurate and complete to the best of my knowledge — Saikat Bairagi</div>
+  </div>
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const delay = parseInt(el.dataset.delay || 0);
+      setTimeout(() => {
+        el.classList.add('visible');
+        if (el.classList.contains('st')) {
+          const line = el.querySelector('.stl');
+          if (line) { line.style.animation = 'lineGrow .8s cubic-bezier(.22,1,.36,1) forwards'; }
+        }
+        el.querySelectorAll('.pb-fill').forEach(bar => {
+          setTimeout(() => bar.classList.add('animate'), 200);
+        });
+        if (el.classList.contains('pb-fill')) {
+          setTimeout(() => el.classList.add('animate'), 200);
+        }
+      }, delay);
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  observer.observe(el);
+});
+
+document.querySelectorAll('.pb-row').forEach(row => {
+  const fill = row.querySelector('.pb-fill');
+  if (!fill) return;
+  const rowObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const delay = parseInt(row.dataset.delay || 0);
+        setTimeout(() => fill.classList.add('animate'), delay + 300);
+        rowObserver.unobserve(row);
+      }
+    });
+  }, { threshold: 0.3 });
+  rowObserver.observe(row);
+});
+
+document.querySelectorAll('.stat').forEach((el, i) => {
+  const so = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => el.style.animation = 'statPop .7s cubic-bezier(.34,1.28,.64,1) forwards', i * 120);
+        el.style.opacity = '0';
+        so.unobserve(el);
+      }
+    });
+  }, { threshold: 0.2 });
+  so.observe(el);
+});
+
+const themeToggle = document.getElementById('themeToggle');
+
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+
+  if(document.body.classList.contains('light-mode')){
+    themeToggle.innerHTML = '☀️ Light Mode';
+  }else{
+    themeToggle.innerHTML = '🌙 Dark Mode';
+  }
+});
+
+</script>
