@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saikat Bairagi | CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    
+    <style>
+        :root {
+            --bg: #0f0f18;
+            --card: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
+            --text-soft: rgba(218, 210, 240, 0.8);
+            --gold: #C8993A;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass: blur(15px);
+        }
+
+        /* Glass Gray Light Mode */
+        body.light-mode {
+            --bg: #e5e7eb;
+            --card: rgba(220, 225, 235, 0.7); /* Refined Glass Gray */
+            --text: #111827;
+            --text-soft: #374151;
+            --gold: #926a1d;
+            --border: rgba(0, 0, 0, 0.1);
+            --glass: blur(25px);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 15px;
+        }
+
+        /* Smooth Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header Area */
+        .hdr {
+            background: var(--card);
+            backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            border: 1px solid var(--border);
+            border-bottom: 3px solid var(--gold);
+            border-radius: 24px 24px 0 0;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .name { font-size: clamp(28px, 6vw, 36px); font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px; }
+        
+        .title-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(200, 153, 58, 0.15);
+            color: var(--gold);
+            font-size: 14px;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .ci {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text);
+            transition: 0.3s ease;
+        }
+
+        .ci:hover {
+            background: var(--gold);
+            color: #fff !important;
+            transform: translateY(-2px);
+        }
+
+        /* Content Container */
+        .body-content {
+            background: var(--card);
+            backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 24px 24px;
+            padding: 2.5rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-n { font-size: 28px; font-weight: 700; color: var(--gold); }
+        .stat-l { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+
+        .section { margin-bottom: 2.5rem; }
+
+        .st {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            font-size: 14px;
+        }
+
+        .stl { flex: 1; height: 1px; background: var(--border); }
+
+        /* Timeline */
+        .timeline { position: relative; padding-left: 20px; border-left: 1px solid var(--border); }
+        .job { position: relative; margin-bottom: 1.8rem; }
+        .job::before {
+            content: ''; position: absolute; left: -25.5px; top: 6px; 
+            width: 10px; height: 10px; background: var(--gold); border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        /* Grids */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .card-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+        }
+        .card-item:hover { transform: translateY(-3px); border-color: var(--gold); }
+
+        /* Skills Tags */
+        .skills-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sk-tag {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-soft);
+        }
+
+        /* Progress Bars */
+        .pb-row { margin-bottom: 15px; }
+        .pb-track { height: 6px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; margin-top: 5px; }
+        .pb-fill { height: 100%; background: var(--gold); width: 0; transition: width 1.5s ease; }
+
+        /* Theme Toggle */
+        .theme-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            padding: 10px 18px; border-radius: 50px; background: var(--gold);
+            color: #fff; border: none; cursor: pointer; font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 650px) {
+            .grid-2, .stats { grid-template-columns: 1fr; }
+            .hdr, .body-content { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<button id="themeToggle" class="theme-btn">🌙 Dark Mode</button>
+
+<div class="wrap">
+    <header class="hdr reveal">
+        <h1 class="name">Saikat Bairagi</h1>
+        <div class="title-pill">
+            <i class="ti ti-building-bank"></i> Customer Service Officer · Banking & Finance
+        </div>
+        
+        <div class="contact-row">
+            <a href="tel:01714846906" class="ci"><i class="ti ti-phone"></i> 01714846906</a>
+            <a href="mailto:saikatbabd@gmail.com" class="ci"><i class="ti ti-mail"></i> saikatbabd@gmail.com</a>
+            <div class="ci"><i class="ti ti-map-pin"></i> Khulna, Bangladesh</div>
+            <div class="ci"><i class="ti ti-calendar"></i> 03 May 1998</div>
+        </div>
+    </header>
+
+    <div class="body-content">
+        <section class="stats reveal">
+            <div class="stat"><div class="stat-n">6+</div><div class="stat-l">Years Experience</div></div>
+            <div class="stat"><div class="stat-n">4</div><div class="stat-l">Roles Held</div></div>
+            <div class="stat"><div class="stat-n">5</div><div class="stat-l">Certifications</div></div>
+        </section>
+
+        <section class="section reveal">
+            <div class="st"><i class="ti ti-user"></i> Professional Summary <div class="stl"></div></div>
+            <p style="color: var(--text-soft); font-size: 15px;">
+                Results-driven banking professional with 6+ years spanning frontline banking, international digital marketing, and remote financial sales. Combines strong customer relationship management with data-driven expertise — currently delivering service excellence at City Bank PLC.
+            </p>
+        </section>
+
+        <section class="section reveal">
+            <div class="st"><i class="ti ti-briefcase"></i> Work Experience <div class="stl"></div></div>
+            <div class="timeline">
+                <div class="job">
+                    <h3 style="font-size: 16px;">Customer Service Officer</h3> 
+                    <p style="color: var(--gold); font-size: 14px; font-weight: 500;">City Bank PLC | Apr 2025 – Present</p>
+                    <ul style="padding-left: 18px; font-size: 14px; color: var(--text-soft); margin-top: 5px;">
+                        <li>Frontline banking services — inquiries, transactions, and complaint resolution.</li>
+                        <li>Cross-sell products and onboard new clients.</li>
+                    </ul>
+                </div>
+                <div class="job">
+                    <h3 style="font-size: 16px;">Digital Marketing Manager</h3>
+                    <p style="color: var(--gold); font-size: 14px; font-weight: 500;">Fiverr · Freelancer (International) | 2017 – 2024</p>
+                    
+                    <ul style="padding-left: 18px; font-size: 14px; color: var(--text-soft); margin-top: 5px;">
+                        <li>Managed end-to-end campaigns for international clients across e-commerce, SaaS, and retail sectors.</li>
+                        <li>Maintained top-rated status through consistent delivery and measurable global results.</li>
+                    </ul>
+
+                </div>
+                <div class="job">
+                    <h3 style="font-size: 16px;">Google Ads Manager</h3>
+                    <p style="color: var(--gold); font-size: 14px; font-weight: 500;">Private Client · United States (Remote) | 2019 – 2024</p>
+                    
+                    <ul style="padding-left: 18px; font-size: 14px; color: var(--text-soft); margin-top: 5px;">
+                        <li>Designed and optimised Google Ads campaigns, improving ROI, quality scores, and cost-per-acquisition.</li>
+                        <li>Delivered monthly insights via Google Analytics and Data Studio.</li>
+                    </ul>
+
+                </div>
+                <div class="job">
+                    <h3 style="font-size: 16px;">Remote Sales Associate</h3>
+                    <p style="color: var(--gold); font-size: 14px; font-weight: 500;">Experior Financial Group · Canada | 2021 – 2023</p>
+                    <ul style="padding-left: 18px; font-size: 14px; color: var(--text-soft); margin-top: 5px;">
+                        <li>Consultative selling of financial products and insurance to the Canadian market.</li>
+                        <li>Consistently met and exceeded monthly targets in a high-performance remote environment.</li>
+                    </ul>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section reveal">
+            <div class="st"><i class="ti ti-school"></i> Education <div class="stl"></div></div>
+            <div class="grid-2">
+                <div class="card-item">
+                    <p style="color: var(--gold); font-size: 12px; font-weight: 700;">2021</p>
+                    <p style="font-weight: 700; font-size: 14px;">MA in English</p>
+                    <p style="font-size: 13px; opacity: 0.8;">Govt. Brajalal College, Khulna</p>
+                </div>
+                <div class="card-item">
+                    <p style="color: var(--gold); font-size: 12px; font-weight: 700;">2020</p>
+                    <p style="font-weight: 700; font-size: 14px;">BA in English</p>
+                    <p style="font-size: 13px; opacity: 0.8;">Daulatpur College (Day-Night), Khulna</p>
+                </div>
+                <div class="card-item">
+                    <p style="color: var(--gold); font-size: 12px; font-weight: 700;">2016</p>
+                    <p style="font-weight: 700; font-size: 14px;">HSC - Business Studies</p>
+                    <p style="font-size: 13px; opacity: 0.8;">Govt. Sundarban Adarsha College</p>
+                </div>
+                <div class="card-item">
+                    <p style="color: var(--gold); font-size: 12px; font-weight: 700;">2014</p>
+                    <p style="font-weight: 700; font-size: 14px;">SSC - Business Studies</p>
+                    <p style="font-size: 13px; opacity: 0.8;">Batiaghata High School, Khulna</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section reveal">
+            <div class="st"><i class="ti ti-chart-bar"></i> Skill Proficiency <div class="stl"></div></div>
+            <div class="pb-row">
+                <div style="display:flex; justify-content:space-between; font-size: 13px;"><span>Customer Relationship Management</span><span>95%</span>
+                </div>
+                <div class="pb-track"><div class="pb-fill" data-width="95%"></div></div>
+            </div>
+            <div class="pb-row">
+                <div style="display:flex; justify-content:space-between; font-size: 13px;"><span>Banking Operations</span><span>93%</span></div>
+                <div class="pb-track"><div class="pb-fill" data-width="88%"></div></div>
+            </div>
+            <div class="pb-row">
+                <div style="display:flex; justify-content:space-between; font-size: 13px;"><span>MS Office Suite</span><span>96%</span></div>
+                <div class="pb-track"><div class="pb-fill" data-width="92%"></div></div>
+            </div>
+            <div class="pb-row">
+                <div style="display:flex; justify-content:space-between; font-size: 13px;"><span>Digital Marketing </span><span>89%</span></div>
+                <div class="pb-track"><div class="pb-fill" data-width="92%"></div></div>
+            </div>
+            <div class="pb-row">
+                <div style="display:flex; justify-content:space-between; font-size: 13px;"><span>Adobe Photoshop & Illustrator </span><span>77%</span></div>
+                <div class="pb-track"><div class="pb-fill" data-width="92%"></div></div>
+            </div>
+
+
+            <div class="st" style="margin-top: 2rem; font-size: 12px;">SKILLS</div>
+            <div class="skills-wrap">
+                <span class="sk-tag">Customer Relations</span><span class="sk-tag">Google Analytics</span>
+                <span class="sk-tag">Digital Banking</span><span class="sk-tag">Customer Service</span>
+                <span class="sk-tag">English 60 WPM</span><span class="sk-tag">Bangla 30 WPM</span>
+                <span class="sk-tag">Adobe Photoshop</span><span class="sk-tag">Adobe Illustrator</span>
+                <span class="sk-tag">MacOS & Windows</span>
+            </div>
+        </section>
+
+        <section class="section reveal">
+            <div class="st"><i class="ti ti-certificate"></i> Certifications <div class="stl"></div></div>
+            <ul style="list-style: none; display: grid; gap: 10px;">
+                <li class="card-item" style="padding: 10px 15px;">
+                    <strong style="font-size: 14px;">City Foundation Program</strong><br>
+                    <span style="font-size: 12px; color: var(--gold);">City Bank PLC · 2025</span>
+                </li>
+                <li class="card-item" style="padding: 10px 15px;">
+                    <strong style="font-size: 14px;">Bancassurance</strong><br>
+                    <span style="font-size: 12px; color: var(--gold);">Bangladesh Insurance Academy · 2025</span>
+                </li>
+                <li class="card-item" style="padding: 10px 15px;">
+                    <strong style="font-size: 14px;">Google Analytics Beginners</strong><br>
+                    <span style="font-size: 12px; color: var(--gold);">Google · 2018</span>
+                </li>
+                <li class="card-item" style="padding: 10px 15px;">
+                    <strong style="font-size: 14px;">Digital Marketing</strong><br>
+                    <span style="font-size: 12px; color: var(--gold);">Creative IT Institute · 2017</span>
+                </li>
+                <li class="card-item" style="padding: 10px 15px;">
+                    <strong style="font-size: 14px;">National Skill Standard Basic</strong><br>
+                    <span style="font-size: 12px; color: var(--gold);">Asia Technical Training Center · 2014</span>
+                </li>
+
+            </ul>
+        </section>
+
+        <section class="section reveal">
+            <div class="st"><i class="ti ti-users"></i> References <div class="stl"></div></div>
+            <div class="grid-2">
+                <div class="card-item">
+                    <p style="font-weight: 700; font-size: 15px;">Rahul Roy</p>
+                    <p style="font-size: 13px; color: var(--gold);">Assistant Director (Cash), Bangladesh Bank</p>
+                    <a href="tel:01916526072" style="font-size: 13px; color: var(--text-soft); display: block; margin-top: 5px;"><i class="ti ti-phone"></i> 01916526072</a>
+                    <a href="mailto:rahul.roy@bb.org.bd" style="font-size: 13px; color: var(--text-soft);"><i class="ti ti-mail"></i> rahul.roy@bb.org.bd</a>
+                </div>
+                <div class="card-item">
+                    <p style="font-weight: 700; font-size: 15px;">Anjon Das</p>
+                    <p style="font-size: 13px; color: var(--gold);">Customer Service Officer, City Bank PLC</p>
+                    <a href="tel:01648505100" style="font-size: 13px; color: var(--text-soft); display: block; margin-top: 5px;"><i class="ti ti-phone"></i> 01648505100</a>
+                    <a href="mailto:anjon.das@citybankplc.com" style="font-size: 13px; color: var(--text-soft);"><i class="ti ti-mail"></i> anjon.das@citybankplc.com</a>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; font-size: 11px; opacity: 0.5; padding-top: 20px; border-top: 1px solid var(--border);">
+            I declare that all information provided is accurate and complete to the best of my knowledge — <a href="https://www.linkedin.com/in/saikat-bairagi" target="_blank" style="color: #C8993A;">Saikat Bairagi</a>
+
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Reveal and Progress Bar Animation
+    const reveal = () => {
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            const windowHeight = window.innerHeight;
+            const elementTop = el.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 80) {
+                el.classList.add('active');
+                const bars = el.querySelectorAll('.pb-fill');
+                bars.forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+            }
+        });
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        themeToggle.innerHTML = document.body.classList.contains('light-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+</script>
+
+</body>
+</html>
